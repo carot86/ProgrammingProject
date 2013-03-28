@@ -29,15 +29,14 @@ public class RManager {
 	public Camera cam;
 	public VertexBufferObjectManager vbom;
 	public ITextureRegion splash_region;
-	//public ITextureRegion menu_background_region;
 	public ITextureRegion play_region;
 	public ITextureRegion options_region;
 	public ITextureRegion load_region;
 	public ITextureRegion control_region;
 	public ITextureRegion knob_region;
 	public ITextureRegion player_region;
+	public ITextureRegion enemy_region;
 	public ITextureRegion bg_region;
-	//public ITiledTextureRegion player_region;
 	public final static int BADGE_OFFSET = 128;
 	public final static int CONTROLLER_OFFSET = 128;
 	public final static int FONT_SIZE = 32;
@@ -48,12 +47,12 @@ public class RManager {
 	private BitmapTextureAtlas controlTextureAtlas;
 	private BitmapTextureAtlas levelTextureAtlas;
 	private BitmapTextureAtlas playerTextureAtlas;
+	private BitmapTextureAtlas enemyTextureAtlas;
 	
 	public void loadMenu(){
 		
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
 		menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), activity.WIDTH, activity.HEIGHT, TextureOptions.BILINEAR);
-		//menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "menu_background.png");
 		play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "play.png");
 		options_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "options.png");
 		       
@@ -86,8 +85,12 @@ public class RManager {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/Player/");
 		playerTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 80, 80, TextureOptions.BILINEAR);
 		player_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(playerTextureAtlas, activity, "player.png", 0, 0);
-		              //BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(playerTextureAtlas, activity, "player.png", 3, 1);
 		playerTextureAtlas.load();
+		
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/Monster/");
+		enemyTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 100, 100,TextureOptions.BILINEAR);
+		enemy_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(enemyTextureAtlas, activity, "Monster.png", 0, 0);
+		enemyTextureAtlas.load();
 		
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/Controller/");
 		controlTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);

@@ -9,6 +9,9 @@ import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.HorizontalAlign;
 
 import android.util.Log;
@@ -23,21 +26,27 @@ public class GameScene extends BaseScene {
 	private int hp = 100;
 
 	private Sprite player;
+	private Sprite enemy;
 	private Player hero;
+	private Enemy villain;
 	
 	public final int BOUNDRY_X_LEFT = 75;
 	public final int BOUNDRY_X_RIGHT = 1140;
 	public final int BOUNDRY_Y_TOP = 65;
 	public final int BOUNDRY_Y_BOTTOM = 610;
+	private final float startX = 100;
+	private final float startY = 100;
 
 	@Override
 	public void createScene() {
 		// TODO Auto-generated method stub
 
 		player = new Sprite(0,0,resources.player_region,vbom);
+		enemy = new Sprite(0, 0, resources.enemy_region,vbom);
 		hero = new Player(player,cam.getCenterX(),cam.getCenterY(),BOUNDRY_X_LEFT,BOUNDRY_X_RIGHT,BOUNDRY_Y_TOP,BOUNDRY_Y_BOTTOM);
 		createBackground();
 		attachChild(hero.player);
+		createEnemies();
 		createHUD();
 
 	}
@@ -57,6 +66,12 @@ public class GameScene extends BaseScene {
 	private void createBackground()
 	{
 		attachChild(new Sprite(0, this.cam.getHeight() - resources.bg_region.getHeight() +32, resources.bg_region, vbom));
+	}
+	
+	private void createEnemies(){
+		villain = new Enemy(enemy, BOUNDRY_X_LEFT, BOUNDRY_X_RIGHT, BOUNDRY_Y_TOP, BOUNDRY_Y_BOTTOM);
+		attachChild(villain.enemy);
+		villain.move(startX, startY);
 	}
 
 	private void createHUD()
