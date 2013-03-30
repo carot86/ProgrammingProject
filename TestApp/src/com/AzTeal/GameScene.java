@@ -28,7 +28,7 @@ public class GameScene extends BaseScene {
 	private Sprite player;
 	private Sprite enemy;
 	private Player hero;
-	private Enemy villain;
+	private Enemy villain, villain2;
 	
 	public final int BOUNDRY_X_LEFT = 75;
 	public final int BOUNDRY_X_RIGHT = 1140;
@@ -37,7 +37,6 @@ public class GameScene extends BaseScene {
 	private final float startX = 100;
 	private final float startY = 100;
 
-	@Override
 	public void createScene() {
 		// TODO Auto-generated method stub
 
@@ -69,9 +68,9 @@ public class GameScene extends BaseScene {
 	}
 	
 	private void createEnemies(){
-		villain = new Enemy(enemy, BOUNDRY_X_LEFT, BOUNDRY_X_RIGHT, BOUNDRY_Y_TOP, BOUNDRY_Y_BOTTOM);
+		villain = new Enemy(enemy, startX, startY, BOUNDRY_X_LEFT, BOUNDRY_X_RIGHT, BOUNDRY_Y_TOP, BOUNDRY_Y_BOTTOM);
 		attachChild(villain.enemy);
-		villain.move(startX, startY);
+		new Thread(villain).start(); 
 	}
 
 	private void createHUD()
@@ -84,6 +83,12 @@ public class GameScene extends BaseScene {
 			public void onControlChange(final BaseOnScreenControl pBaseOnScreenControl, final float pValueX, final float pValueY) {
 				
 				hero.move(pValueX * 500, pValueY * 500);
+				villain.move();
+				
+				//check if the player and enemy collide, health player deteriorates if collision occurs
+				if(player.collidesWith(enemy)){
+					damage(1);
+				}
 					
 			}
 
@@ -123,5 +128,4 @@ public class GameScene extends BaseScene {
 		health.setText("HP: " + hp);
 		
 	}
-
 }
